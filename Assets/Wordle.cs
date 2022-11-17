@@ -75,7 +75,8 @@ public class Wordle : MonoBehaviour
 				result[i] = ComparisonResult.Correct;
 			}
 			else if ( SelectedWord.Count((c) => c == guess[i]) >= SelectedWord.Substring(0, i).Count((c) => c == guess[i]))
-			{ 
+			{
+				throw new NotImplementedException("TODO");
 
 			}
 		}

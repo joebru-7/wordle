@@ -12,8 +12,8 @@ enum ComparisonResult
 
 public class Wordle : MonoBehaviour
 {
-	// Start is called before the first frame update
-	public string[] words;
+	//public string[] words;
+	public Trie words;
 	public int WordSize = 5;
 
 	public int SelectedIndex;
@@ -29,14 +29,17 @@ public class Wordle : MonoBehaviour
 		x.All((r) => r == ComparisonResult.Correct);
 	}
 
+	[ContextMenu("SelectRandomWord")]
 	void GenerateRandomWord()
 	{
 		if (words == null)
 			throw new Exception("No words loaded");
-
+		
+		SelectedWord = words.SelectRandomValidWord();
+		/*
 		SelectedIndex =  UnityEngine.Random.Range(0, words.Length - 1);
 		SelectedWord = words[SelectedIndex];
-
+		*/
 	}
 
 	[ContextMenu("loadWords")]
@@ -49,11 +52,12 @@ public class Wordle : MonoBehaviour
 			x = Resources.Load<TextAsset>("words11+");
 		else
 			x = Resources.Load<TextAsset>("words" + WordSize);
-
-		words = x.text.Split('\n');
-		for (int i = 0; i < words.Length; i++)
+		string[] tempWords = x.text.Split('\n');
+		
+		words = new Trie();
+		for (int i = 0; i < tempWords.Length; i++)
 		{
-			words[i] = words[i].Trim();
+			words.AddWord(tempWords[i].Trim());
 		}
 	}
 

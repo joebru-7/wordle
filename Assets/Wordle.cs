@@ -74,10 +74,14 @@ public class Wordle : MonoBehaviour
 			{
 				result[i] = ComparisonResult.Correct;
 			}
-			else if ( SelectedWord.Count((c) => c == guess[i]) >= SelectedWord.Substring(0, i).Count((c) => c == guess[i]))
+			// if the whole word has more of the letter than the word up to i
+			else if ( SelectedWord.Count((c) => c == guess[i]) > SelectedWord[..(i-1)].Count((c) => c == guess[i]))
 			{
-				throw new NotImplementedException("TODO");
-
+				result[i] = ComparisonResult.NotInWord;
+			}
+			else
+			{
+				result[i] = ComparisonResult.WrongPlace;
 			}
 		}
 		

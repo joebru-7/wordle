@@ -3,10 +3,15 @@ using UnityEngine.UI;
 
 class Letter : MonoBehaviour
 {
-	char value => tmp.text[0];
-	
-	Color color => img.color;
-
+	public char Value {
+		get => tmp.text[0];
+		set => tmp.text = value.ToString();
+		}
+	public Color Color
+	{
+		get => img.color;
+		set => img.color = value;
+	}
 	TMPro.TextMeshPro tmp;
 	Image img;
 

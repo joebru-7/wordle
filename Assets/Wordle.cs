@@ -3,13 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-enum ComparisonResult
-{
-	NotInWord,
-	WrongPlace,
-	Correct
-}
-
 public class Wordle : MonoBehaviour
 {
 	//public string[] words;
@@ -86,12 +79,6 @@ public class Wordle : MonoBehaviour
 		}
 		
 		return result;
-	}
-
-	// Update is called once per frame
-	void Update()
-	{
-		
 	}
 
 	public static int BinSearch(string obj,IList<string> collection )

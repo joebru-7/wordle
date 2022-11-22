@@ -34,17 +34,14 @@ public class Keyboard : MonoBehaviour
 			_letters[i].Value = letter;
 
 			_letters[i].OnClick += ClickHandeler;
-
-			InputSystem.onAnyButtonPress.Call(KeyboardHandeler);
 		}
+
+		InputSystem.onAnyButtonPress.Call(KeyboardHandeler);
 	}
 
-	private void KeyboardHandeler(InputControl obj)
+	private void KeyboardHandeler(InputControl inputControl)
 	{
-		print(obj.IsPressed());
-		if (!obj.IsPressed())
-			return;
-		print(obj.name);
+		print(inputControl.name);
 	}
 
 	void ClickHandeler(char c)

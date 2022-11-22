@@ -3,6 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.Utilities;
 
 public class Keyboard : MonoBehaviour
 {
@@ -31,10 +33,24 @@ public class Keyboard : MonoBehaviour
 			_letters[i].name = letter.ToString();
 			_letters[i].Value = letter;
 
+			_letters[i].OnClick += ClickHandeler;
+
+			InputSystem.onAnyButtonPress.Call(KeyboardHandeler);
 		}
 	}
 
+	private void KeyboardHandeler(InputControl obj)
+	{
+		print(obj.IsPressed());
+		if (!obj.IsPressed())
+			return;
+		print(obj.name);
+	}
 
+	void ClickHandeler(char c)
+	{
+		print(c);
+	}
 
 	// Update is called once per frame
 	void Update()

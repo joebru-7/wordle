@@ -15,21 +15,28 @@ class Letter : MonoBehaviour
 	}
 	TMPro.TMP_Text _tmp;
 	Image _img;
+	Button _btn;
 
 	public delegate void OnStartFunction(Letter l);
 	public event OnStartFunction OnStartCallback;
 
 	private void Start()
 	{
-		_tmp = GetComponentInChildren<TMPro.TMP_Text>();
-		_img = GetComponent<Image>();
+		Init();
 		OnStartCallback?.Invoke(this);
 	}
 
+	bool _hasBeenInited = false;
 	public void Init()
 	{
+		if (_hasBeenInited)
+			return;
+		_hasBeenInited=true;
+
 		_tmp = GetComponentInChildren<TMPro.TMP_Text>();
 		_img = GetComponent<Image>();
+		_btn = GetComponent<Button>();
+		_btn.onClick.AddListener(ClickHandeler);
 	}
 
 
@@ -55,7 +62,7 @@ class Letter : MonoBehaviour
 	public delegate void OnClickFunction(char c);
 	public event OnClickFunction OnClick;
 
-	private void OnMouseDown()
+	private void ClickHandeler()
 	{
 		OnClick?.Invoke(Value);
 	}

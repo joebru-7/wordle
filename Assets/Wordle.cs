@@ -1,10 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class Wordle : MonoBehaviour
 {
+	public static Wordle instance;
+
 	//public string[] words;
 	public Trie words;
 	public int WordSize = 5;
@@ -15,11 +19,10 @@ public class Wordle : MonoBehaviour
 	[ContextMenu("Start")]
 	void Start()
 	{
+		instance = this;
 		LoadWords();
 		GenerateRandomWord();
 
-		var x = Analyze("hello");
-		x.All((r) => r == ComparisonResult.Correct);
 	}
 
 	[ContextMenu("SelectRandomWord")]
@@ -54,29 +57,70 @@ public class Wordle : MonoBehaviour
 		}
 	}
 
+	public ComparisonResult[] MakeGuess(string word)
+	{
+		Assert.IsTrue(word.Length == WordSize);
+
+		var result = Analyze(word);
+		if (result.All((r) => r == ComparisonResult.Correct))
+		{
+			Victory();
+			return result;
+		}
+
+		for (int i = 0; i < word.Length; i++)
+		{
+			char letter = word[i];
+			Keyboard.instance.UpdateLetterColour(letter, result[i]);
+		}
+
+		return result;
+
+	}
+
+	private void Victory()
+	{
+		//TODO
+		print("you won"!);
+	}
+
 	ComparisonResult[] Analyze(string guess)
 	{
 		ComparisonResult[] result = new ComparisonResult[guess.Length];
+		//bool containsWrongPlace = false;
+		//List<(char,int)> chars = new(5);
+
 		for (int i = 0; i < guess.Length; i++)
 		{
-			if ( !SelectedWord.Contains(guess[i]) )
-			{
-				result[i] = ComparisonResult.NotInWord;
-			}
-			else if (guess[i] == SelectedWord[i])
+			if (guess[i] == SelectedWord[i])
 			{
 				result[i] = ComparisonResult.Correct;
+				continue;
 			}
-			// if the whole word has more of the letter than the word up to i
-			else if ( SelectedWord.Count((c) => c == guess[i]) > SelectedWord[..(i-1)].Count((c) => c == guess[i]))
+			else if ( !SelectedWord.Contains(guess[i]) )
 			{
 				result[i] = ComparisonResult.NotInWord;
 			}
 			else
 			{
+				//TODO check duplicates
 				result[i] = ComparisonResult.WrongPlace;
+				//containsWrongPlace = true;
+				//chars.Add((guess[i],i));
 			}
 		}
+
+		/*
+		if (!containsWrongPlace)
+			return result;
+
+		chars.Sort();
+
+		for (int i = 0; i < guess.Length; i++)
+		{
+
+		}
+		*/
 		
 		return result;
 	}

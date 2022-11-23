@@ -8,7 +8,7 @@ class Letter : MonoBehaviour
 		get => _tmp.text[0];
 		set => _tmp.text = value.ToString();
 		}
-	public Color Color
+	private Color Color
 	{
 		get => _img.color;
 		set => _img.color = value;
@@ -31,7 +31,7 @@ class Letter : MonoBehaviour
 	{
 		if (_hasBeenInited)
 			return;
-		_hasBeenInited=true;
+		_hasBeenInited = true;
 
 		_tmp = GetComponentInChildren<TMPro.TMP_Text>();
 		_img = GetComponent<Image>();
@@ -46,15 +46,15 @@ class Letter : MonoBehaviour
 		switch (r)
 		{
 			case ComparisonResult.NotInWord:
-				Color = Color.red;
+				if (Color != Color.green && Color != Color.yellow)
+					Color = Color.gray;
 				break;
 			case ComparisonResult.WrongPlace:
+				if (Color != Color.green)
 				Color = Color.yellow;
 				break;
 			case ComparisonResult.Correct:
 				Color = Color.green;
-				break;
-			default:
 				break;
 		}
 	}
@@ -64,13 +64,7 @@ class Letter : MonoBehaviour
 
 	private void ClickHandeler()
 	{
-		OnClick?.Invoke(Value);
+		if(Value != ' ')
+			OnClick?.Invoke(char.ToUpper(Value));
 	}
-
-	public void SetColor(Color c)
-	{
-		Color = c;
-	}
-
-
 }

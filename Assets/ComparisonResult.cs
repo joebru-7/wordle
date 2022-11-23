@@ -1,4 +1,4 @@
-﻿enum ComparisonResult
+﻿public enum ComparisonResult
 {
 	NotInWord,
 	WrongPlace,

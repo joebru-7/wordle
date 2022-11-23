@@ -1,6 +1,5 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +7,8 @@ using UnityEngine.InputSystem.Utilities;
 
 public class Keyboard : MonoBehaviour
 {
+	public static Keyboard instance;
+
 	[SerializeField] Letter LetterPrefab;
 	readonly Char[] _keyboardLeyout = {
 			'Q', 'W', 'E' ,'R', 'T', 'Y', 'U', 'I', 'O', 'P',
@@ -20,6 +21,7 @@ public class Keyboard : MonoBehaviour
 	[ContextMenu("Start")]
 	void Start()
 	{
+		instance = this;
 		for (int i = transform.childCount-1; i >= 0 ; i--)
 			DestroyImmediate(transform.GetChild(i).gameObject);
 
@@ -39,19 +41,40 @@ public class Keyboard : MonoBehaviour
 		InputSystem.onAnyButtonPress.Call(KeyboardHandeler);
 	}
 
+	
+
 	private void KeyboardHandeler(InputControl inputControl)
 	{
-		print(inputControl.name);
+		//TODO multipe keys
+		switch (inputControl.name)
+		{
+			case string n when n.Length == 1:
+				ClickHandeler(char.ToUpper(n[0]));
+				break;
+			case "enter":
+				ClickHandeler('>');
+				break;
+			case "backspace":
+				ClickHandeler('<');
+				break;
+			default:
+				break;
+		}
+		//print(inputControl.name + " " + inputControl.name.Length);
+		
 	}
+
+	public delegate void keyPressFunc(char c);
+	public event keyPressFunc KeyPressEvent;
 
 	void ClickHandeler(char c)
 	{
-		print(c);
+		KeyPressEvent?.Invoke(c);
+		//print(c);
 	}
 
-	// Update is called once per frame
-	void Update()
+	public void UpdateLetterColour(char c, ComparisonResult color)
 	{
-		
+		_letters.First((letter)=>letter.Value==char.ToUpper(c)).SetColor(color);
 	}
 }

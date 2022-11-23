@@ -9,7 +9,6 @@ public class Wordle : MonoBehaviour
 {
 	public static Wordle instance;
 
-	//public string[] words;
 	public Trie words;
 	public int WordSize = 5;
 
@@ -41,6 +40,7 @@ public class Wordle : MonoBehaviour
 	[ContextMenu("loadWords")]
 	void LoadWords()
 	{
+		//TODO Better wordlists
 		TextAsset x;
 		if (WordSize <0)
 			x = Resources.Load<TextAsset>("wordsAll");
@@ -78,9 +78,15 @@ public class Wordle : MonoBehaviour
 
 	}
 
+	public void Loss()
+	{
+		//TODO Loss
+		print("you lost");
+	}
+
 	private void Victory()
 	{
-		//TODO
+		//TODO Victory
 		print("you won"!);
 	}
 

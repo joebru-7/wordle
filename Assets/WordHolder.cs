@@ -81,6 +81,9 @@ public class WordHolder : MonoBehaviour
 					_madeGuesses++;
 					_wordIndex = 0;
 
+					if (_madeGuesses == AllowedGuesses)
+						Wordle.instance.Loss();
+
 				}
 				return;
 			case '<':

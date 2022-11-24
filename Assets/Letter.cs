@@ -39,12 +39,13 @@ class Letter : MonoBehaviour
 		_btn.onClick.AddListener(ClickHandeler);
 	}
 
-
-
 	public void SetColor(ComparisonResult r)
 	{
 		switch (r)
 		{
+			case ComparisonResult.Initial:
+				Color = new Color(1,1,1,.5f);
+				break;
 			case ComparisonResult.NotInWord:
 				if (Color != Color.green && Color != Color.yellow)
 					Color = Color.gray;

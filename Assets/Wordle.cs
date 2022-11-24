@@ -31,10 +31,15 @@ public class Wordle : MonoBehaviour
 			throw new Exception("No words loaded");
 		
 		SelectedWord = words.SelectRandomValidWord();
-		/*
-		SelectedIndex =  UnityEngine.Random.Range(0, words.Length - 1);
-		SelectedWord = words[SelectedIndex];
-		*/
+	}
+
+	[ContextMenu("Restart")]
+	public void Restart()
+	{
+		Keyboard.instance.Restart();
+		WordHolder.Instance.Restart();
+
+		SelectedWord = words.SelectRandomValidWord();
 	}
 
 	[ContextMenu("loadWords")]

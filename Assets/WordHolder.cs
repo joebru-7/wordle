@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class WordHolder : MonoBehaviour
 {
-	public static WordHolder instance;
+	public static WordHolder Instance;
 
 	[SerializeField] Letter LetterPrefab;
 	private Letter[,] _letters;
@@ -20,6 +20,7 @@ public class WordHolder : MonoBehaviour
 	[ContextMenu("Start")]
 	void Start()
 	{
+		Instance = this;
 		for (int i = transform.childCount - 1; i >= 0; i--)
 			DestroyImmediate(transform.GetChild(i).gameObject);
 
@@ -30,12 +31,21 @@ public class WordHolder : MonoBehaviour
 			{
 				var letter = Instantiate(LetterPrefab, transform);
 				letter.Init();
-				letter.Value = (char)(' ');
+				letter.Value = ' ';
 				_letters[i, j] = letter;
 			}
 		}
 
 		Keyboard.instance.KeyPressEvent += KeyPress;
+	}
+
+	public void Restart()
+	{
+		Start();
+		Keyboard.instance.KeyPressEvent -= KeyPress;
+		AllowedGuesses = 5;
+		_madeGuesses = 0;
+		_wordIndex = 0;
 
 	}
 

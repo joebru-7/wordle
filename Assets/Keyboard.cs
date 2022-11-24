@@ -41,7 +41,13 @@ public class Keyboard : MonoBehaviour
 		InputSystem.onAnyButtonPress.Call(KeyboardHandeler);
 	}
 
-	
+	public void Restart()
+	{
+		foreach (var letter in _letters)
+		{
+			letter.SetColor(ComparisonResult.Initial);
+		}
+	}
 
 	private void KeyboardHandeler(InputControl inputControl)
 	{

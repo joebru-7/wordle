@@ -4,8 +4,7 @@ using System.Reflection;
 
 public class Trie
 {
-
-	Node root = new Node();
+	readonly Node root = new Node();
 	public bool HasWord(string s)
 	{
 		return root.HasWord(s);
@@ -35,7 +34,7 @@ public class Trie
 	{
 		bool IsValid = false;
 		const int ArrSize = 'Z' - 'A' +1;
-		Node[] x;
+		Node[] children;
 
 		int Map(char c)
 		{
@@ -48,16 +47,16 @@ public class Trie
 			return (char)(i + 'A');
 		}
 
-		public bool IsValidOrHasChildren() => IsValid || x != null; 
+		public bool IsValidOrHasChildren() => IsValid || children != null; 
 
 		public bool HasWord(string s)
 		{
 			if (s == "")
 				return IsValid;
-			else if (x == null || x[Map(s[0])] == null) 
+			else if (children == null || children[Map(s[0])] == null) 
 				return false;
 			else
-				return x[Map(s[0])].HasWord(s[1..]);
+				return children[Map(s[0])].HasWord(s[1..]);
 		}
 
 		public void AddWord(string s)
@@ -68,25 +67,25 @@ public class Trie
 				return;
 			}
 
-			x ??= new Node[ArrSize];
+			children ??= new Node[ArrSize];
 
 			int index = Map(s[0]);
-			if (x[index] == null)
-				x[index] = new Node();
+			if (children[index] == null)
+				children[index] = new Node();
 
-			x[index].AddWord(s[1..]);
+			children[index].AddWord(s[1..]);
 		}
 
 		public string SelectRandomValidWord()
 		{
-			if (x == null)
+			if (children == null)
 				if (IsValid)
 					return "";
 				else
 					throw new Exception("unreacheble");
 
 
-			int num = x.Count((n) => n != null && n.IsValidOrHasChildren()) ;
+			int num = children.Count((n) => n != null && n.IsValidOrHasChildren()) ;
 
 			int randomnumber = UnityEngine.Random.Range(IsValid?-1:0, num );
 
@@ -97,13 +96,16 @@ public class Trie
 			else
 			{
 				int count = 0;
-				for (int i = 0; i < x.Length; i++)
+				for (int i = 0; i < children.Length; i++)
 				{
-					Node n = x[i];
+					Node n = children[i];
 					if (n != null && n.IsValidOrHasChildren())
+					{
 						if (count++ == randomnumber)
-
+						{
 							return InvMap(i) + n.SelectRandomValidWord();
+						}
+					}
 				}
 			}
 			throw new Exception("unreacheble");

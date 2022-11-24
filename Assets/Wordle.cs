@@ -46,14 +46,14 @@ public class Wordle : MonoBehaviour
 	void LoadWords()
 	{
 		//TODO Better wordlists
-		TextAsset x;
+		TextAsset wordFile;
 		if (WordSize <0)
-			x = Resources.Load<TextAsset>("wordsAll");
+			wordFile = Resources.Load<TextAsset>("wordsAll");
 		else if (WordSize > 10)
-			x = Resources.Load<TextAsset>("words11+");
+			wordFile = Resources.Load<TextAsset>("words11+");
 		else
-			x = Resources.Load<TextAsset>("words" + WordSize);
-		string[] tempWords = x.text.Split('\n');
+			wordFile = Resources.Load<TextAsset>("words" + WordSize);
+		string[] tempWords = wordFile.text.Split('\n');
 		
 		words = new Trie();
 		for (int i = 0; i < tempWords.Length; i++)

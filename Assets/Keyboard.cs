@@ -54,7 +54,7 @@ public class Keyboard : MonoBehaviour
 		//TODO multipe keys
 		switch (inputControl.name)
 		{
-			case string n when n.Length == 1:
+			case string n when n.Length == 1 && char.IsLetter(n[0]):
 				ClickHandeler(char.ToUpper(n[0]));
 				break;
 			case "enter":
@@ -66,6 +66,7 @@ public class Keyboard : MonoBehaviour
 			default:
 				break;
 		}
+		//print(inputControl);
 		//print(inputControl.name + " " + inputControl.name.Length);
 		
 	}

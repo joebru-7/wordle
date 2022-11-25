@@ -84,7 +84,6 @@ public class Trie
 				else
 					throw new Exception("unreacheble");
 
-
 			int num = children.Count((n) => n != null && n.IsValidOrHasChildren()) ;
 
 			int randomnumber = UnityEngine.Random.Range(IsValid?-1:0, num );
@@ -110,6 +109,5 @@ public class Trie
 			}
 			throw new Exception("unreacheble");
 		}
-
 	}
 }

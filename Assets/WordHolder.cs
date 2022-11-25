@@ -59,7 +59,7 @@ public class WordHolder : MonoBehaviour
 
 		if (_wordIndex >= WordLength)
 			return;
-		
+
 		_letters[_madeGuesses, _wordIndex++].Value = c;
 
 	}

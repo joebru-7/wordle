@@ -12,7 +12,6 @@ public class Wordle : MonoBehaviour
 	public Trie words;
 	public int WordSize = 5;
 
-	public int SelectedIndex;
 	public string SelectedWord;
 
 	[ContextMenu("Start")]

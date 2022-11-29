@@ -78,6 +78,7 @@ public class WordHolder : MonoBehaviour
 					if (!Wordle.instance.words.HasWord(guess))
 					{
 						//TODO graphics
+						DisplayHandeler.ShowInvalidWord();
 						print("Invalid guess");
 						return;
 					}

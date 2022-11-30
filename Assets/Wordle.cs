@@ -131,7 +131,6 @@ public class Wordle : MonoBehaviour
 			}
 		}
 
-		/*
 		if (!containsWrongPlace)
 			return result;
 
@@ -141,7 +140,6 @@ public class Wordle : MonoBehaviour
 		{
 
 		}
-		*/
 		
 		return result;
 	}

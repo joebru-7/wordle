@@ -14,6 +14,9 @@ public class Wordle : MonoBehaviour
 
 	public string SelectedWord;
 
+	private enum GameState{ win,loss,playing};
+	GameState _gameState = GameState.playing;
+
 	[ContextMenu("Start")]
 	void Start()
 	{
@@ -39,6 +42,7 @@ public class Wordle : MonoBehaviour
 		WordHolder.Instance.Restart();
 
 		SelectedWord = words.SelectRandomValidWord();
+		_gameState = GameState.playing;
 	}
 
 	[ContextMenu("loadWords")]
@@ -84,14 +88,19 @@ public class Wordle : MonoBehaviour
 
 	public void Loss()
 	{
-		//TODO Loss
-		print("you lost");
+		if (_gameState != GameState.playing)
+			return;
+		_gameState = GameState.loss;
+		DisplayHandeler.instance.ShowLost(SelectedWord);
 	}
 
 	private void Victory()
 	{
-		//TODO Victory
-		print("you won"!);
+		if (_gameState != GameState.playing)
+			return;
+		_gameState = GameState.win;
+		DisplayHandeler.instance.ShowWin();
+
 	}
 
 	ComparisonResult[] Analyze(string guess)

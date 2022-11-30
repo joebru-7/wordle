@@ -44,7 +44,7 @@ class Letter : MonoBehaviour
 		switch (r)
 		{
 			case ComparisonResult.Initial:
-				Color = new Color(1,1,1,.5f);
+				Color = new Color(1,1,1,0.4f);
 				break;
 			case ComparisonResult.NotInWord:
 				if (Color != Color.green && Color != Color.yellow)

@@ -11,7 +11,7 @@ public class WordHolder : MonoBehaviour
 	private Letter[,] _letters;
 
 	public int WordLength = 5;
-	public int AllowedGuesses = 5;
+	public int AllowedGuesses = 6;
 	private int _madeGuesses = 0;
 
 	private int _wordIndex = 0;
@@ -43,7 +43,6 @@ public class WordHolder : MonoBehaviour
 	{
 		Start();
 		Keyboard.instance.KeyPressEvent -= KeyPress;
-		AllowedGuesses = 5;
 		_madeGuesses = 0;
 		_wordIndex = 0;
 
@@ -57,7 +56,7 @@ public class WordHolder : MonoBehaviour
 			return;
 		}
 
-		if (_wordIndex >= WordLength)
+		if (_wordIndex >= WordLength || _madeGuesses >= AllowedGuesses)
 			return;
 
 		_letters[_madeGuesses, _wordIndex++].Value = c;
@@ -77,9 +76,7 @@ public class WordHolder : MonoBehaviour
 
 					if (!Wordle.instance.words.HasWord(guess))
 					{
-						//TODO graphics
 						DisplayHandeler.ShowInvalidWord();
-						print("Invalid guess");
 						return;
 					}
 
@@ -89,6 +86,7 @@ public class WordHolder : MonoBehaviour
 					{
 						_letters[_madeGuesses, i].SetColor(result[i]);
 					}
+
 					_madeGuesses++;
 					_wordIndex = 0;
 

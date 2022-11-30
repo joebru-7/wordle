@@ -106,8 +106,8 @@ public class Wordle : MonoBehaviour
 	ComparisonResult[] Analyze(string guess)
 	{
 		ComparisonResult[] result = new ComparisonResult[guess.Length];
-		//bool containsWrongPlace = false;
-		//List<(char,int)> chars = new(5);
+		bool containsWrongPlace = false;
+		List<(char,int)> WrongPlaces = new(5);
 
 		for (int i = 0; i < guess.Length; i++)
 		{
@@ -124,8 +124,10 @@ public class Wordle : MonoBehaviour
 			{
 				//TODO check duplicates
 				result[i] = ComparisonResult.WrongPlace;
-				//containsWrongPlace = true;
-				//chars.Add((guess[i],i));
+				containsWrongPlace = true;
+				WrongPlaces.Add((guess[i],i));
+
+
 			}
 		}
 
@@ -133,7 +135,7 @@ public class Wordle : MonoBehaviour
 		if (!containsWrongPlace)
 			return result;
 
-		chars.Sort();
+		WrongPlaces.Sort();
 
 		for (int i = 0; i < guess.Length; i++)
 		{

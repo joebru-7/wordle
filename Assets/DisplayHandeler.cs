@@ -49,6 +49,6 @@ public class DisplayHandeler : MonoBehaviour
 	void Update()
 	{
 		if (_fade.color.a > 0)
-			_fade.color = new Color(_fade.color.r, _fade.color.g, _fade.color.b, _fade.color.a - .001f);
+			_fade.color = new Color(_fade.color.r, _fade.color.g, _fade.color.b, _fade.color.a - Time.deltaTime);
 	}
 }

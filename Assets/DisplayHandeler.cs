@@ -15,16 +15,12 @@ public class DisplayHandeler : MonoBehaviour
 	{
 		instance = this;
 		_winLoss.enabled = false;
+		_fade.alpha = 0;
 	}
 
 	public static void ShowInvalidWord()
 	{
-		instance._fade.color = 
-			new Color(
-				instance._fade.color.r, 
-				instance._fade.color.g, 
-				instance._fade.color.b, 1
-				);
+		instance._fade.alpha = 1;
 	}
 
 	public void ShowWin()
@@ -48,7 +44,7 @@ public class DisplayHandeler : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
-		if (_fade.color.a > 0)
-			_fade.color = new Color(_fade.color.r, _fade.color.g, _fade.color.b, _fade.color.a - Time.deltaTime);
+		if (_fade.alpha > 0)
+			_fade.alpha -= Time.deltaTime;
 	}
 }
